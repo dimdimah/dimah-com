@@ -30,7 +30,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="container max-w-[725px] px-4 sm:px-6 lg:px-0 py-8">
+    <main className="container sm:w-[725px] leading-relaxed antialiased pb-20">
       <p className="font-medium text-lg mb-4">Social Media</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -50,7 +50,7 @@ export default function ContactPage() {
             className="p-4 hover:opacity-80 group border border-foreground/10 rounded-lg flex flex-row items-center justify-between transition-all duration-200 ease-in-out"
           >
             <div className="grow">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-muted-foreground truncate">
                 {item.username}
               </div>
               <div>
