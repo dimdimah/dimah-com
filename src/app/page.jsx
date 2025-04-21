@@ -1,12 +1,17 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { profileData, educationData, projectDatas } from "@/data/home";
+import {
+  profileData,
+  educationData,
+  projectDatas,
+  experienceData,
+} from "@/data/home";
 import ProfileCard from "@/components/profileCard";
 
 export default function HomePage() {
   return (
-    <main className="container max-w-[725px] leading-relaxed antialiased pb-20">
+    <main className="container max-w-[725px] leading-relaxed antialiased">
       <ProfileCard
         name={profileData.name}
         position={profileData.position}
@@ -17,10 +22,8 @@ export default function HomePage() {
       <p className="font-semibold mt-16">Education</p>
       <div className="mt-4 flex flex-col divide-foreground/10">
         {educationData.map((edu, index) => (
-          <Link
+          <div
             key={index}
-            href={edu.url}
-            target="_blank"
             className="block py-2 mb-3 hover:bg-lime-600/10 -mx-3 px-3 rounded-md"
           >
             <h1 className="flex flex-row justify-between">
@@ -28,16 +31,37 @@ export default function HomePage() {
               <span className="opacity-50 text-sm">{edu.duration}</span>
             </h1>
             <h2 className="opacity-70 text-sm">{edu.description}</h2>
+          </div>
+        ))}
+      </div>
+
+      {/* Work Experience */}
+      <p className="font-semibold mt-10">Work Experience</p>
+      <div className="mt-4 flex flex-col divide-foreground/10">
+        {experienceData.map((exp, index) => (
+          <Link
+            key={index}
+            href={exp.url}
+            target="_blank"
+            className="block py-2 mb-3 hover:bg-lime-600/10 -mx-3 px-3 rounded-md"
+          >
+            <h1 className="flex flex-row justify-between">
+              <span>{exp.institution}</span>
+              <span className="opacity-50 text-sm">{exp.duration}</span>
+            </h1>
+            <h2 className="opacity-70 text-sm">{exp.description}</h2>
           </Link>
         ))}
       </div>
+
       {/* Projects Section */}
-      <p className="font-semibold mt-16">Projects</p>
+      <p className="font-semibold mt-10">Projects</p>
       <div className="mt-8 grid md:grid-cols-2 gap-8">
         {projectDatas.map((project, index) => (
           <Link
             key={index}
             href={project.url}
+            target="_blank"
             className="relative hover:bg-lime-600/10 hover:border-foreground/10 border border-foreground/0 rounded-lg -m-3 p-3 transition-colors duration-100"
           >
             <Image

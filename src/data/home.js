@@ -14,7 +14,7 @@ export const profileData = {
 export const educationData = [
   {
     institution: "STMIK Amikom Surakarta",
-    duration: "Sep 2021 - Now.",
+    duration: "Sep 2021 - Present.",
     description: "S1 Informatika | IPK 3.73",
     url: "/",
   },
@@ -29,6 +29,21 @@ export const educationData = [
     duration: "Jan 2024 - Feb 2024.",
     description: "Revo U Mini Course",
     url: "/",
+  },
+];
+
+export const experienceData = [
+  {
+    institution: "Madrasah Aliyah Nurul Hadid",
+    duration: "Jun 2018 - May 2019",
+    description: "Library Administration",
+    url: "https://nurulhadid.sch.id/",
+  },
+  {
+    institution: "SMP IT Al-Muttaqin",
+    duration: "Mar 2020 - Jul 2021.",
+    description: "Administration Staff",
+    url: "https://almuttaqincrbn.com/",
   },
 ];
 

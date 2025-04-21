@@ -30,9 +30,9 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="container sm:w-[725px] leading-relaxed antialiased pb-20">
+    <main className="container sm:w-[725px] leading-relaxed antialiased">
+      {/* Social Media Section */}
       <p className="font-medium text-lg mb-4">Social Media</p>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {socialLinks.map((item, index) => (
           <Link
@@ -88,6 +88,7 @@ export default function ContactPage() {
           Hi 👋 If you need anything, send me a message.
         </p>
         <Input
+          disabled
           type="email"
           name="email"
           placeholder="Your Email"
@@ -95,12 +96,14 @@ export default function ContactPage() {
           className="w-full h-10 px-4 bg-none border border-foreground/5 rounded-md"
         />
         <Textarea
+          disabled
           name="message"
           placeholder="Your message"
           required
           className="w-full px-4 bg-none border border-foreground/5 rounded-md"
         />
         <Button
+          disabled
           type="submit"
           className="text-sm font-semibold rounded-lg w-max bg-foreground hover:bg-foreground/80 text-background h-10 px-4 disabled:opacity-50"
         >
