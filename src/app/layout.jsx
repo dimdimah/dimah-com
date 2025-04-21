@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Dimah Luthfi - Frontend Web Developer",
   description: "web portofolio dimah luthfi",
+  icons: {
+    icon: "/icon-dimah.png",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -32,7 +35,7 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            <main className="flex items-center flex-col">
+            <main className="flex items-center flex-col dark:bg-[#030303] bg-[#FBFBFB]">
               <nav className="container max-w-3xl mt-6 flex flex-row items-center gap-4 justify-between">
                 <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
                   <div className="flex gap-5 items-center text-base">

@@ -1,13 +1,10 @@
 export const profileData = {
   name: "Dimah Luthfi A.R",
   position: "Frontend Developer",
-  description:
-    "I am a front-end web developer who is passionate about creating something useful for many people. building Harsa Edu as a front-end developer and Harian app as a project manager. interested to work together contact me on Instagram or Linkedin.",
+  description: `I am a front-end web developer who is passionate about creating something useful for many people. building Harsa Edu as a front-end developer and Harian app as a project manager. interested in working together, feel free to download my CV  or contact me on Instagram.`,
   links: [
-    { text: "Harsa Edu", url: "/" },
-    { text: "Harian app", url: "/" },
-    { text: "Instagram", url: "/" },
-    { text: "Linkedin", url: "/" },
+    { text: "Instagram.", url: "https://www.instagram.com/dim.dimmm_/" },
+    { text: "CV", url: "/" },
   ],
 };
 
