@@ -2,11 +2,11 @@
 
 View the [demo here]().
 
-![Magic Portfolio](public/bg-cover.png)
+![Portfolio](public/bg-cover.png)
 
 # **Getting started**
 
-Portfolio was built with [Shadcn/ui](https://ui.shadcn.com/) and [Next.js](https://nextjs.org). It requires Node.js v18.17+.
+Portfolio was built with [Shadcn/ui](https://ui.shadcn.com/) and [Next.js](https://nextjs.org).
 
 **1. Clone the repository**
 
@@ -29,7 +29,7 @@ npm run dev
 **5. Edit content**
 
 ```
-src/data/home.js & social.js
+src/data/home.js & src/data/social.js
 ```
 
 # **Features**

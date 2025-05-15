@@ -4,7 +4,7 @@ export const profileData = {
   description: `I am a front-end web developer who is passionate about creating something useful for many people. building Harsa Edu as a front-end developer and Harian app as a project manager. interested in working together, feel free to download my CV  or contact me on Instagram.`,
   links: [
     { text: "Instagram.", url: "https://www.instagram.com/dim.dimmm_/" },
-    { text: "CV", url: "/" },
+    { text: "CV", url: "/cv.pdf" },
   ],
 };
 
@@ -59,7 +59,7 @@ export const projectDatas = [
     tagline: "Buat Harimu, Jadi Lebih Baik",
     techstack: ["Figma", "Flutter", "DBEaver", "PhP", "Postman"],
     imageUrl: "/harian-app.png",
-    url: "/",
+    url: "https://github.com/ferikw/Harian",
   },
   {
     nameProject: "Irnanda Ui App",

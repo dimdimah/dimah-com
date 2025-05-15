@@ -14,6 +14,7 @@ const ProfileCard = ({ name, position, description, links }) => {
               <Link
                 key={index}
                 href={linkData.url}
+                target="_blank"
                 className="hover:text-lime-600/75"
               >
                 {word}
