@@ -77,4 +77,19 @@ export const projectDatas = [
     imageUrl: "/mountainesia.png",
     url: "https://mountainesia.vercel.app/",
   },
+  {
+    nameProject: "Face Recognition",
+    pub_year: "2025",
+    tagline: "Real time emotion powered by Gemini",
+    techstack: [
+      "Next.js",
+      "Gemini",
+      "Tailwindcss",
+      "Shadcn ui",
+      "Lucid",
+      "Vercel",
+    ],
+    imageUrl: "/face-recognitons.png",
+    url: "https://face-predictions.vercel.app/",
+  },
 ];
