@@ -1,18 +1,18 @@
 export const profileData = {
   name: "Dimah Luthfi A.R",
-  position: "Frontend Developer",
-  description: `I am a front-end web developer who is passionate about creating something useful for many people. building Harsa Edu as a front-end developer and Harian app as a project manager. interested in working together, feel free to download my CV  or contact me on Instagram.`,
+  position: "Associate Product Manager",
+  description: `An Informatics graduate poised to transition from theory to application as an Associate Product Manager. Possesses a comprehensive understanding of the project management, and web development, with a sharp focus on analyzing user needs to create user centric digital products. interested in working together, feel free to download my CV  or contact me on Instagram.`,
   links: [
     { text: "Instagram.", url: "https://www.instagram.com/dim.dimmm_/" },
-    { text: "CV", url: "/cv.pdf" },
+    { text: "CV", url: "/pm.pdf" },
   ],
 };
 
 export const educationData = [
   {
     institution: "STMIK Amikom Surakarta",
-    duration: "Sep 2021 - Present.",
-    description: "S1 Informatika | IPK 3.73",
+    duration: "Sep 2021 - Sep 2025.",
+    description: "S1 Informatika | IPK 3.69/4.00",
     url: "/",
   },
   {
@@ -30,6 +30,18 @@ export const educationData = [
 ];
 
 export const experienceData = [
+  {
+    institution: "Project Mobile Apps “Harian”",
+    duration: "Feb 2025 - Mar 2025.",
+    description: "Project Manager",
+    url: "https://github.com/ferikw/Harian",
+  },
+  {
+    institution: "Forum Asissten Lab STMIK Amikom Surakarta",
+    duration: "Aug 2022 - Des 2024.",
+    description: "Secretary",
+    url: "https://foras.netlify.app/",
+  },
   {
     institution: "Madrasah Aliyah Nurul Hadid",
     duration: "Jun 2018 - May 2019",

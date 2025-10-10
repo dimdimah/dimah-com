@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Dimah Luthfi - Frontend Web Developer",
-  description: "web portofolio dimah luthfi",
+  title: "Dimah Luthfi - Associate Product Manager",
+  description: "dimah luthfi website portfolio",
   icons: {
     icon: "/icon-dimah.png",
   },
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
     <>
       <html lang="en" className={geistSans.className} suppressHydrationWarning>
         <head />
-        <body>
+        <body suppressHydrationWarning>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -41,9 +41,6 @@ export default function RootLayout({ children }) {
                   <div className="flex gap-5 items-center text-base">
                     <Link href={"/"} className="hover:text-lime-700">
                       home
-                    </Link>
-                    <Link href={"/blog"} className="hover:text-lime-700">
-                      blog
                     </Link>
                     <Link href={"/contact"} className="hover:text-lime-700">
                       contact
