@@ -1,10 +1,10 @@
 export const profileData = {
   name: "Dimah Luthfi A.R",
-  position: "Associate Product Manager",
-  description: `An Informatics graduate poised to transition from theory to application as an Associate Product Manager. Possesses a comprehensive understanding of the project management, and web development, with a sharp focus on analyzing user needs to create user centric digital products. interested in working together, feel free to download my CV  or contact me on Instagram.`,
+  position: "Sales Associate & Office Administration",
+  description: `I am Dimah Luthfi Aulia Rohman, an Informatics graduate with solid professional experience in Administration and Sales Associate roles. I am proficient in managing daily cash flow, performing financial data reconciliation, and preparing accurate operational reports using Microsoft Office and Google Workspace. As a Sales Associate, I have direct experience in customer handling, driving sales growth through up-selling techniques, and meticulously managing product inventory. Let’s collaborate by reaching out via Instagram  or downloading my CV  for further details.`,
   links: [
-    { text: "Instagram.", url: "https://www.instagram.com/dim.dimmm_/" },
-    { text: "CV", url: "/pm.pdf" },
+    { text: "Instagram", url: "https://www.instagram.com/dim.dimmm_/" },
+    { text: "CV", url: "/admin.pdf" },
   ],
 };
 
@@ -30,6 +30,18 @@ export const educationData = [
 ];
 
 export const experienceData = [
+  {
+    institution: "Sales Associate at Arriyadh Group",
+    duration: "Jan 2026 - Now.",
+    description: "Sales Associate",
+    url: "/",
+  },
+  {
+    institution: "Admin Finance at PT. Global Jet Express Patrol Indramayu",
+    duration: "Nov 2025 - Dec 2025.",
+    description: "Admin Finance",
+    url: "/",
+  },
   {
     institution: "Project Mobile Apps “Harian”",
     duration: "Feb 2025 - Mar 2025.",
@@ -90,9 +102,9 @@ export const projectDatas = [
     url: "https://mountainesia.vercel.app/",
   },
   {
-    nameProject: "Face Recognition",
-    pub_year: "2025",
-    tagline: "Real time emotion powered by Gemini",
+    nameProject: "Fin Flow",
+    pub_year: "2026",
+    tagline: "Aplikasi Manajemen Keuangan Pribadi",
     techstack: [
       "Next.js",
       "Gemini",
@@ -102,6 +114,6 @@ export const projectDatas = [
       "Vercel",
     ],
     imageUrl: "/face-recognitons.png",
-    url: "https://face-predictions.vercel.app/",
+    url: "/",
   },
 ];
