@@ -32,7 +32,7 @@ export const educationData = [
 export const experienceData = [
   {
     institution: "Marketing Sales & Creative Support at PT. Ufuk Hijau Energi",
-    duration: "Apr 2026 - Now.",
+    duration: "Apr 2026 - Jun 2026.",
     description: "Marketing Sales & Creative Support",
     url: "/",
   },
