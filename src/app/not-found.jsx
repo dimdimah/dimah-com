@@ -3,7 +3,7 @@ import { FileX } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <main className="container sm:w-[725px] leading-relaxed antialiased pb-20">
+    <div className="leading-relaxed antialiased">
       <div className="flex flex-col items-center justify-center min-h-[675px] text-center">
         <FileX size={80} />
         <h1 className="text-4xl font-bold mb-6">Page Not Found</h1>
@@ -14,6 +14,6 @@ export default function NotFound() {
           </Link>
         </p>
       </div>
-    </main>
+    </div>
   );
 }

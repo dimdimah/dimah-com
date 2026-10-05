@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
@@ -9,14 +9,18 @@ import { Button } from "@/components/ui/button";
 import { socialLinks } from "@/data/social";
 
 export default function ContactPage() {
-  const [copiedUrl, setCopiedUrl] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
 
   const handleCopyClick = () => {
-    const email = "dimaharrohman@gmail.com";
+    const email = "dimaharohman@gmail.com";
     navigator.clipboard
       .writeText(email)
       .then(() => {
-        setCopiedUrl(email);
         toast.success("Email berhasil disalin!", {
           description: `"${email}" telah disalin ke clipboard.`,
         });
@@ -29,8 +33,43 @@ export default function ContactPage() {
       });
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.error || "Gagal mengirim pesan.");
+        return;
+      }
+
+      toast.success("Pesan berhasil dikirim!", {
+        description: "Terima kasih, saya akan menghubungi Anda segera.",
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch {
+      toast.error("Gagal mengirim pesan.", {
+        description: "Terjadi kesalahan jaringan. Coba lagi.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <main className="container sm:w-[725px] leading-relaxed antialiased">
+    <div className="leading-relaxed antialiased">
       {/* Social Media Section */}
       <p className="font-medium text-lg mb-4">Social Media</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -83,33 +122,47 @@ export default function ContactPage() {
       </div>
 
       {/* Form Message */}
-      <form className="flex flex-col gap-4 mt-14 border-t pt-10 border-foreground/5">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 mt-14 border-t pt-10 border-foreground/5"
+      >
         <p className="mb-4 text-base">
           Hi 👋 If you need anything, send me a message.
         </p>
         <Input
-          disabled
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          className="w-full h-10 px-4 bg-none border border-foreground/5 rounded-md"
+        />
+        <Input
           type="email"
           name="email"
           placeholder="Your Email"
+          value={formData.email}
+          onChange={handleChange}
           required
           className="w-full h-10 px-4 bg-none border border-foreground/5 rounded-md"
         />
         <Textarea
-          disabled
           name="message"
           placeholder="Your message"
+          value={formData.message}
+          onChange={handleChange}
           required
           className="w-full px-4 bg-none border border-foreground/5 rounded-md"
         />
         <Button
-          disabled
           type="submit"
+          disabled={loading}
           className="text-sm font-semibold rounded-lg w-max bg-foreground hover:bg-foreground/80 text-background h-10 px-4 disabled:opacity-50"
         >
-          Send Message
+          {loading ? "Sending..." : "Send Message"}
         </Button>
       </form>
-    </main>
+    </div>
   );
 }

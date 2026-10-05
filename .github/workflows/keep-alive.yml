@@ -1,0 +1,54 @@
+name: Supabase Keep-Alive (Prevent Pausing)
+
+on:
+  schedule:
+    # Berjalan setiap 3 hari sekali pada jam 04:00 UTC (11:00 WIB)
+    - cron: '0 4 */3 * *'
+  # Memungkinkan dijalankan manual kapan saja via tombol "Run workflow" di GitHub
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    name: Ping Supabase Database
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run Keep-Alive Ping
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$NEXT_PUBLIC_SUPABASE_URL" ] || [ -z "$NEXT_PUBLIC_SUPABASE_ANON_KEY" ]; then
+            echo "::warning ::Secret NEXT_PUBLIC_SUPABASE_URL atau NEXT_PUBLIC_SUPABASE_ANON_KEY belum diatur di GitHub Secrets!"
+            echo "Silakan tambahkan di: Repository Settings -> Secrets and variables -> Actions."
+            exit 0
+          fi
+          node scripts/keep-alive.mjs
+
+      - name: Direct Fallback REST Ping (Zero-Failure Guarantee)
+        if: always()
+        run: |
+          if [ -n "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" ] && [ -n "${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" ]; then
+            echo "Sending direct HTTP keep-alive ping to Supabase PostgREST..."
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X GET "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/profiles?select=id&limit=1" \
+              -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
+              -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}")
+            echo "Supabase HTTP Response Code: $STATUS"
+            if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 400 ]; then
+              echo "✅ Supabase is ACTIVE and awake! Inactivity pause timer successfully reset."
+            fi
+          fi

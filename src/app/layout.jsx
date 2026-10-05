@@ -1,62 +1,52 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
-import ThemeSwitcher from "@/components/theme-switcher";
-import Link from "next/link";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata = {
-  title: "Dimah Luthfi - Associate Product Manager",
-  description: "dimah luthfi website portfolio",
+  title: "Dimah Luthfi A.R — Informatics & IT Support",
+  description: "Portfolio & Technical Profile of Dimah Luthfi A.R",
   icons: {
     icon: "/icon-dimah.png",
+  },
+  other: {
+    "darkreader-lock": "true",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <>
-      <html lang="en" className={geistSans.className} suppressHydrationWarning>
-        <head />
-        <body suppressHydrationWarning>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <main className="flex items-center flex-col dark:bg-[#030303] bg-[#FBFBFB]">
-              <nav className="container max-w-3xl mt-6 flex flex-row items-center gap-4 justify-between">
-                <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-                  <div className="flex gap-5 items-center text-base">
-                    <Link href={"/"} className="hover:text-lime-700">
-                      home
-                    </Link>
-                    <Link href={"/contact"} className="hover:text-lime-700">
-                      contact
-                    </Link>
-                  </div>
-                  <ThemeSwitcher />
-                </div>
-              </nav>
-              <div className="pt-12 pb-32 antialiased p-3 px-5">
-                {children}
-                <Toaster />
-              </div>
-            </main>
-          </ThemeProvider>
-        </body>
-      </html>
-    </>
+    <html
+      lang="en"
+      className={`${inter.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <meta name="darkreader-lock" content="true" />
+      </head>
+      <body className="font-sans antialiased" suppressHydrationWarning>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
