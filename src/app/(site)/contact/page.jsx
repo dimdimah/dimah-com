@@ -1,168 +1,80 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import ContactForm from "@/components/site/contact-form";
 import { socialLinks } from "@/data/social";
+import { profileData } from "@/data/home";
+
+export const metadata = {
+  title: "Kontak — D. Luthfi Aulia Rohman",
+  description:
+    "Hubungi D. Luthfi Aulia Rohman untuk peluang IT Support, System Administration, atau proyek pengembangan web.",
+};
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [loading, setLoading] = useState(false);
-
-  const handleCopyClick = () => {
-    const email = "dimaharohman@gmail.com";
-    navigator.clipboard
-      .writeText(email)
-      .then(() => {
-        toast.success("Email berhasil disalin!", {
-          description: `"${email}" telah disalin ke clipboard.`,
-        });
-      })
-      .catch((error) => {
-        console.error("Gagal menyalin teks:", error);
-        toast.error("Gagal menyalin email.", {
-          description: "Terjadi kesalahan saat menyalin teks.",
-        });
-      });
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.error || "Gagal mengirim pesan.");
-        return;
-      }
-
-      toast.success("Pesan berhasil dikirim!", {
-        description: "Terima kasih, saya akan menghubungi Anda segera.",
-      });
-      setFormData({ name: "", email: "", message: "" });
-    } catch {
-      toast.error("Gagal mengirim pesan.", {
-        description: "Terjadi kesalahan jaringan. Coba lagi.",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="leading-relaxed antialiased">
-      {/* Social Media Section */}
-      <p className="font-medium text-lg mb-4">Social Media</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {socialLinks.map((item, index) => (
-          <Link
-            key={index}
-            href={item.href}
-            onClick={(e) => {
-              if (item.label === "Email") {
-                e.preventDefault();
-                handleCopyClick();
-              } else if (item.onClick) {
-                item.onClick(e);
-              }
-            }}
-            target={item.href ? "_blank" : undefined}
-            className="p-4 hover:opacity-80 group border border-foreground/10 rounded-lg flex flex-row items-center justify-between transition-all duration-200 ease-in-out"
-          >
-            <div className="grow">
-              <div className="text-sm text-muted-foreground truncate">
-                {item.username}
-              </div>
-              <div>
-                {item.label}
-                {item.extra && (
-                  <span className="group-hover:opacity-100 opacity-0 transition-opacity duration-200">
-                    {item.extra}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="w-8 h-8 rounded-lg bg-foreground/10 flex items-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="stroke-foreground"
-              >
-                {item.icon}
-              </svg>
-            </div>
-          </Link>
-        ))}
-      </div>
+    <section className="container-x py-20 sm:py-28">
+      <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+        <div>
+          <p className="eyebrow mb-4">Ayo ngobrol</p>
+          <h1 className="text-[clamp(1.9rem,4vw,3rem)] leading-[1.08]">
+            Siap beralih dari perencanaan ke eksekusi?
+          </h1>
+          <p className="mt-5 max-w-md text-sm leading-relaxed text-foreground/65">
+            Ceritakan kebutuhan timmu — saya akan membalas dengan jujur soal
+            apa yang bisa saya kerjakan dan kapan bisa mulai. Biasanya dibalas
+            dalam 1–2 hari kerja.
+          </p>
 
-      {/* Form Message */}
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 mt-14 border-t pt-10 border-foreground/5"
-      >
-        <p className="mb-4 text-base">
-          Hi 👋 If you need anything, send me a message.
-        </p>
-        <Input
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full h-10 px-4 bg-none border border-foreground/5 rounded-md"
-        />
-        <Input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full h-10 px-4 bg-none border border-foreground/5 rounded-md"
-        />
-        <Textarea
-          name="message"
-          placeholder="Your message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-          className="w-full px-4 bg-none border border-foreground/5 rounded-md"
-        />
-        <Button
-          type="submit"
-          disabled={loading}
-          className="text-sm font-semibold rounded-lg w-max bg-foreground hover:bg-foreground/80 text-background h-10 px-4 disabled:opacity-50"
-        >
-          {loading ? "Sending..." : "Send Message"}
-        </Button>
-      </form>
-    </div>
+          <div className="mt-8 flex items-center gap-3 font-mono text-xs text-muted-foreground">
+            <span className="inline-block size-1.5 animate-pulse rounded-full bg-accent-4" />
+            Tersedia untuk peluang baru
+          </div>
+
+          {/* Direct channels */}
+          <ul className="mt-10 flex flex-col gap-2.5">
+            {socialLinks.map((item) => (
+              <li key={item.label}>
+                <Link
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 rounded-full border border-line bg-card px-5 py-3.5 font-mono text-sm text-foreground/80 transition-colors hover:border-accent-1/50 hover:text-foreground"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="shrink-0 text-muted-foreground group-hover:text-accent-2 transition-colors"
+                    aria-hidden="true"
+                  >
+                    {item.icon}
+                  </svg>
+                  <span className="truncate">{item.username}</span>
+                  <span
+                    aria-hidden="true"
+                    className="ml-auto text-foreground/30 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-foreground/70"
+                  >
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-8 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+            {profileData.location}
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-line bg-card p-7 sm:p-10">
+          <ContactForm compact />
+        </div>
+      </div>
+    </section>
   );
 }

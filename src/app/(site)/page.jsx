@@ -1,194 +1,398 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
-import { getCmsData } from "@/app/actions/cms";
-import RoleFilter from "@/components/roleFilter";
+import {
+  profileData,
+  educationData,
+  experienceData,
+  projectDatas,
+  skillsData,
+} from "@/data/home";
+import Preloader from "@/components/site/preloader";
+import ParticleSphere from "@/components/site/particle-sphere";
+import ServicesStage from "@/components/site/services-stage";
+import Marquee from "@/components/site/marquee";
+import JourneySteps from "@/components/site/journey-steps";
+import HighlightSlider from "@/components/site/highlight-slider";
+import ContactForm from "@/components/site/contact-form";
 
 export const metadata = {
   title: "D. Luthfi Aulia Rohman — IT Support & Programmer",
-  description: "Portofolio teknis D. Luthfi Aulia Rohman — Lulusan S1 Informatika (IPK 3,73 / Cumlaude) berpengalaman di IT Rumah Sakit, troubleshooting hardware/jaringan, serta web development.",
+  description:
+    "Portofolio teknis D. Luthfi Aulia Rohman — Lulusan S1 Informatika (IPK 3,73 / Cumlaude) berpengalaman di IT Rumah Sakit, troubleshooting hardware/jaringan, serta web development.",
 };
 
-export default async function HomePage() {
-  const {
-    profile: profileData,
-    educations: educationData,
-    experiences: experienceData,
-    projects: projectDatas,
-    skills: skillsData,
-  } = await getCmsData();
+const TECH_STACK = [
+  ...new Set([
+    ...experienceData.flatMap((e) => e.tools || []),
+    ...projectDatas.flatMap((p) => p.techstack || []),
+  ]),
+];
+
+export default function HomePage() {
+  const heroStats = [
+    {
+      value: String(experienceData.length).padStart(2, "0"),
+      label: "pengalaman & proyek",
+    },
+    { value: "3,73", label: "IPK · cumlaude" },
+    { value: "01", label: "juara nasional 2024" },
+  ];
+
+  const skillItems = skillsData.map((cat) => ({
+    title: cat.category,
+    description: cat.skills.slice(0, 4).join(" · "),
+  }));
+
+  const journeyItems = experienceData.map((exp) => ({
+    title: `${exp.position} — ${exp.institution}`,
+    heading: exp.institution,
+    kicker: exp.type,
+    description: exp.responsibilities?.[0] || exp.position,
+    panelText: exp.responsibilities?.join(" ") || "",
+    tags: exp.tools || [],
+  }));
+
+  const highlights = experienceData
+    .filter((e) => e.achievements?.length)
+    .map((e) => ({
+      quote: e.achievements[0],
+      author: e.institution,
+      role: `${e.position} · ${e.duration}`,
+      initials: e.institution
+        .split(" ")
+        .slice(0, 2)
+        .map((w) => w[0])
+        .join("")
+        .toUpperCase(),
+    }));
+
+  const contactFacts = [
+    "IPK 3,73 / 4,00 — predikat Cumlaude",
+    "Magang IT di RS PKU Aisyiyah Boyolali",
+    "Juara 1 Kompetisi Nasional CORISINDO 2024",
+  ];
+
   return (
-    <div className="space-y-12">
-      {/* 1. HERO SECTION (Caveman Technical Spec Style) */}
-      <section className="border-b border-zinc-200/80 dark:border-zinc-800/80 pb-12">
-        <h1 className="text-[32px] sm:text-[42px] font-bold tracking-[-0.02em] text-foreground leading-[1.12]">
-          {profileData.name}
-        </h1>
+    <>
+      <Preloader />
 
-
-        <div className="mt-2.5 flex flex-wrap items-center gap-2 font-mono text-xs text-foreground/65">
-          <span>{profileData.position}</span>
-          <span className="text-foreground/30">·</span>
-          <span className="flex items-center gap-1">
-            <MapPin className="w-3.5 h-3.5 text-zinc-400" />
-            {profileData.location || "Jatinom, Klaten, Indonesia"}
-          </span>
-        </div>
-
-
-        <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-foreground/75">
-          {profileData.description}
-        </p>
-
-        {/* Technical Terminal Spec Box (ala Caveman Command Bar) */}
-        <div className="mt-6 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100/70 dark:bg-zinc-900/60 p-3.5 font-mono text-xs text-foreground/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="text-emerald-500 font-bold">$</span>
-              <span className="text-foreground/90 font-medium">availability --status</span>
-              <span className="text-foreground/35 hidden sm:inline">→</span>
-            </div>
-            <div className="flex items-center gap-1.5 pl-4 sm:pl-0">
-              <span className="text-foreground/35 sm:hidden">↳</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-medium text-[11px] sm:text-xs">
-                {profileData.position}
-              </span>
+      {/* ============ HERO ============ */}
+      <div className="relative -mt-[117px]">
+        {/* Sticky background: glows + particle sphere */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+          <div className="sticky top-0 h-[100dvh] overflow-hidden">
+            <div className="absolute -left-[25%] -top-[35%] h-[80vh] w-[80vw] -rotate-12 animate-drift bg-[radial-gradient(ellipse_at_center,rgba(91,123,251,0.32),transparent_65%)]" />
+            <div className="absolute left-1/2 top-1/2 size-[min(80vmin,720px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(118,98,244,0.5),rgba(91,123,251,0.16)_45%,transparent_70%)]" />
+            <div className="absolute inset-0">
+              <ParticleSphere />
             </div>
           </div>
+        </div>
 
-          <div className="flex items-center gap-2.5 text-[11px] text-foreground/50 pt-2 sm:pt-0 border-t sm:border-t-0 border-zinc-200/60 dark:border-zinc-800/60">
-            <span>{profileData.institution || "Amikom"} · IPK {profileData.ipk?.split(" ")[0] || "3,73"}</span>
-            <span>•</span>
-            <a
-              href={profileData.cv_url || profileData.links?.find((l) => l.text === "CV")?.url || "/admin.pdf"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground underline underline-offset-4 hover:opacity-75 transition-opacity"
+        <div className="relative z-10">
+          <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[117px] lg:block lg:h-[100svh] lg:min-h-[680px]">
+            {/* Watermark */}
+            <p
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none whitespace-nowrap text-center font-display text-[17vw] font-semibold leading-none tracking-tighter text-foreground/[0.045]"
             >
-              download cv (pdf)
-            </a>
-          </div>
+              DIMAH
+            </p>
+
+            {/* Centered entrance */}
+            <div className="animate-rise container-x relative flex flex-1 flex-col items-center justify-center py-14 text-center lg:absolute lg:inset-0 lg:py-0">
+              <p className="eyebrow mb-6 rounded-full border border-line bg-black/45 px-4 py-1.5 !text-white/90 backdrop-blur-md">
+                IT Support · Programmer
+              </p>
+              <h1 className="text-display text-legible max-w-5xl text-foreground">
+                {profileData.name}
+              </h1>
+            </div>
+
+            {/* Bottom row: lead + CTAs + stats */}
+            <div className="container-x relative grid items-end gap-8 pb-10 lg:absolute lg:inset-x-0 lg:bottom-0 lg:grid-cols-[1fr_auto]">
+              <div className="max-w-sm">
+                <p className="text-legible text-sm leading-relaxed text-foreground/85">
+                  Lulusan S1 Informatika (IPK 3,73 Cumlaude) dengan pengalaman
+                  magang IT di rumah sakit — troubleshooting hardware &amp;
+                  jaringan, plus pengembangan web dengan Next.js.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link
+                    href="/contact"
+                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-[13px] font-semibold tracking-wide text-black transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white/90 active:translate-y-0"
+                  >
+                    <span>Hubungi Saya</span>
+                    <span
+                      aria-hidden="true"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      →
+                    </span>
+                  </Link>
+                  <Link
+                    href="#proyek"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-line px-5 py-3 text-[13px] font-semibold tracking-wide text-foreground transition-colors hover:border-foreground/50 hover:bg-foreground/5"
+                  >
+                    Lihat Portofolio
+                  </Link>
+                </div>
+              </div>
+
+              <dl className="flex gap-8 sm:gap-10">
+                {heroStats.map((stat) => (
+                  <div key={stat.label}>
+                    <dd className="font-display text-2xl font-semibold tabular-nums sm:text-3xl">
+                      {stat.value}
+                    </dd>
+                    <dt className="mt-1 max-w-[14ch] font-mono text-[10px] uppercase leading-snug tracking-wider text-foreground/60">
+                      {stat.label}
+                    </dt>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* ============ KEAHLIAN (pinned stage) ============ */}
+      <ServicesStage
+        id="keahlian"
+        eyebrow="Keahlian"
+        title="Yang bisa saya kerjakan untuk timmu"
+        lead="Empat kategori keahlian yang saya pakai sehari-hari — dari hardware & jaringan sampai membangun produk digital."
+        items={skillItems}
+      />
+
+      {/* ============ TECH MARQUEE ============ */}
+      <section className="py-16 sm:py-20" aria-label="Teknologi">
+        <p className="eyebrow mb-8 text-center">
+          Teknologi yang saya gunakan
+        </p>
+        <Marquee duration={45}>
+          {TECH_STACK.map((tech) => (
+            <span
+              key={tech}
+              className="flex h-16 w-44 shrink-0 items-center justify-center px-6 font-display text-sm font-semibold uppercase tracking-wide text-foreground/60 transition-colors duration-300 hover:text-foreground sm:w-52"
+            >
+              {tech}
+            </span>
+          ))}
+        </Marquee>
+      </section>
+
+      {/* ============ TENTANG ============ */}
+      <section className="container-x grid gap-12 py-20 sm:py-28 lg:grid-cols-[220px_1fr] lg:gap-20">
+        <p className="eyebrow lg:pt-2">Tentang saya</p>
+        <div className="min-w-0">
+          <p className="max-w-3xl text-[clamp(1.25rem,2.4vw,2rem)] font-medium leading-[1.35] tracking-tight text-foreground">
+            S1 Informatika{" "}
+            <span className="text-accent-4">Cumlaude</span> yang terbiasa
+            menangani masalah IT lapangan sekaligus{" "}
+            <span className="text-accent-1">menulis kode</span> untuk produk
+            digital.
+          </p>
+          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-foreground/70">
+            {profileData.description}
+          </p>
+
+          <dl className="mt-10 grid gap-6 sm:grid-cols-3">
+            {[
+              {
+                dt: "Pendidikan",
+                dd: `${profileData.institution} · ${profileData.degree}`,
+              },
+              { dt: "IPK", dd: profileData.ipk },
+              { dt: "Domisili", dd: profileData.location },
+            ].map((f) => (
+              <div key={f.dt} className="border-t border-line pt-4">
+                <dt className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                  {f.dt}
+                </dt>
+                <dd className="mt-2 text-sm text-foreground/85">{f.dd}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* ============ PENGALAMAN (auto steps) ============ */}
+      <JourneySteps
+        id="pengalaman"
+        eyebrow="Pengalaman"
+        title="Live dalam 4 langkah pengalaman."
+        lead="Dari kompetisi nasional sampai magang IT di rumah sakit — setiap peran memiliki tanggung jawab yang jelas."
+        items={journeyItems}
+      />
+
+      {/* ============ PROYEK ============ */}
+      <section id="proyek" className="container-x scroll-mt-28 py-20 sm:py-28">
+        <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
+          <p className="eyebrow mb-4">Proyek</p>
+          <h2 className="text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[1.08]">
+            Beberapa proyek yang sudah saya bangun.
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-foreground/65">
+            Implementasi sistem nyata — dari portal rumah sakit sampai
+            pengelolaan stok berbasis QR Code.
+          </p>
         </div>
 
-        {/* Two Highlight Spec Boxes — generated from first two skill categories */}
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {skillsData.slice(0, 2).map((cat) => (
-            <div key={cat.category} className="rounded-xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/40 dark:bg-zinc-900/30 p-4">
-              <p className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5 font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600" />
-                {cat.category}
-              </p>
-              <p className="mt-2.5 text-xs text-foreground/75 leading-relaxed">
-                {cat.skills.slice(0, 4).join(" · ")}
-              </p>
-            </div>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {projectDatas.map((project, i) => (
+            <article
+              key={project.id}
+              className="group relative isolate flex min-h-[280px] flex-col overflow-hidden rounded-xl border border-line bg-card p-7 transition-[transform,border-color] duration-500 hover:-translate-y-1 hover:border-foreground/25 sm:p-9"
+            >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-6 -z-10 blur-xl transition-transform duration-700 group-hover:scale-110"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(60% 55% at 0% 70%, rgb(150 170 120 / .4), transparent 70%), radial-gradient(55% 55% at 45% 105%, rgb(190 120 200 / .45), transparent 70%), radial-gradient(45% 60% at 100% 95%, rgb(187 231 181 / .4), transparent 70%), radial-gradient(40% 50% at 100% 40%, rgb(91 123 251 / .4), transparent 70%)",
+                }}
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--card)_22%,rgb(0_0_0/0.45)_50%,transparent_78%)]"
+              />
+
+              <div className="flex items-start justify-between gap-4">
+                <span className="font-mono text-xs text-muted-foreground">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                  {project.pub_year}
+                </span>
+              </div>
+
+              <div className="mt-auto pt-10">
+                <span className="inline-flex items-center gap-2 rounded-full border border-line bg-background/60 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-accent-4 backdrop-blur">
+                  {project.tags?.[0]}
+                </span>
+                <h3 className="mt-4 text-xl font-semibold leading-snug">
+                  {project.nameProject}
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-foreground/65">
+                  {project.tagline}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {(project.techstack || []).slice(0, 5).map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-md border border-line px-2 py-0.5 font-mono text-[10px] text-foreground/60"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* 2. DIRECTORY INDEX HEADER (ala Caveman "Explore the reference") */}
-      <section className="space-y-10">
-        <div>
-          <p className="font-mono text-[11px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-            structured index
-          </p>
-          <h2 className="mt-1 text-xl font-semibold tracking-[-0.02em] text-foreground">
-            Explore the reference
-          </h2>
-          <p className="mt-1 text-xs text-foreground/60 leading-relaxed">
-            Riwayat pengalaman kerja, proyek implementasi sistem, dan kualifikasi akademik terverifikasi.
-          </p>
-        </div>
+      {/* ============ TYPOGRAPHIC BAND ============ */}
+      <section className="overflow-hidden py-16 sm:py-24" aria-hidden="true">
+        <Marquee duration={30}>
+          <span className="flex items-center gap-8 pr-8 font-display text-[clamp(3rem,10vw,9rem)] font-semibold uppercase leading-[1.05] tracking-tight">
+            dimah luthfi <span className="text-accent-1">✳</span>
+            <span className="text-transparent [-webkit-text-stroke:1.5px_currentColor]">
+              IT Support &amp; Programmer
+            </span>
+            <span className="text-accent-4">✣</span>
+          </span>
+        </Marquee>
+      </section>
 
-        {/* Section 01: Work Experience & Projects */}
-        <div className="border-t border-zinc-200/80 dark:border-zinc-800/80 pt-6">
-          <div className="flex items-baseline gap-2 mb-4">
-            <span className="font-mono text-[11px] tabular-nums text-zinc-500 dark:text-zinc-400 font-semibold">
-              01
-            </span>
-            <span className="text-sm font-semibold tracking-tight text-foreground">
-              Work Experiences & Projects
-            </span>
-          </div>
+      {/* ============ SOROTAN ============ */}
+      <HighlightSlider items={highlights} />
 
-          <RoleFilter
-            experienceData={experienceData}
-            projectDatas={projectDatas}
-          />
-        </div>
-
-        {/* Section 02: Education & Credentials */}
-        <div className="border-t border-zinc-200/80 dark:border-zinc-800/80 pt-6">
-          <div className="flex items-baseline gap-2 mb-4">
-            <span className="font-mono text-[11px] tabular-nums text-zinc-500 dark:text-zinc-400 font-semibold">
-              02
-            </span>
-            <span className="text-sm font-semibold tracking-tight text-foreground">
-              Education & Academic Credentials
-            </span>
-            <span className="text-xs text-foreground/45 ml-auto font-mono hidden sm:inline">
-              formal degree · sarjana komputer (s.kom.)
-            </span>
-          </div>
-
-          <div className="space-y-3 mt-3">
-            {educationData.map((edu, index) => (
-              <div
-                key={index}
-                className="p-4 rounded-xl border border-zinc-200/70 dark:border-zinc-800/80 bg-zinc-50/30 dark:bg-zinc-900/30 hover:bg-zinc-100/60 dark:hover:bg-zinc-800/40 transition-colors"
+      {/* ============ CTA CARD ============ */}
+      <section className="container-x py-12">
+        <div className="relative isolate grid overflow-hidden rounded-xl border border-line lg:grid-cols-[1.3fr_1fr]">
+          <div className="bg-card p-8 sm:p-12">
+            <p className="eyebrow mb-5">Kontak</p>
+            <h2 className="text-[clamp(1.5rem,2.6vw,2.1rem)] leading-[1.1]">
+              Cocok dengan posisi atau proyekmu? Mari bicarakan detailnya.
+            </h2>
+            <p className="mt-5 max-w-lg text-sm text-foreground/60">
+              Saya terbuka untuk peluang IT Support, System Administration, dan
+              pengembangan web — full-time, kontrak, atau proyek.
+            </p>
+            <div className="mt-9">
+              <Link
+                href="/contact"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-[13px] font-semibold text-white shadow-[0_8px_30px_-8px_rgb(118_98_244/0.7)] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-8px_rgb(91_123_251/0.9)]"
               >
-                <div className="flex flex-row justify-between items-baseline">
-                  <span className="font-semibold text-sm text-foreground">
-                    {edu.institution}
-                  </span>
-                  <span className="text-xs text-foreground/50 font-mono">
-                    {edu.duration}
-                  </span>
-                </div>
-                <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-1">
-                  {edu.description}
-                </p>
-                {edu.focus ? (
-                  <p className="text-xs text-foreground/70 mt-1 leading-relaxed">
-                    {edu.focus}
-                  </p>
-                ) : null}
-                {edu.thesis ? (
-                  <p className="text-xs text-foreground/60 mt-1.5 font-mono bg-zinc-100/60 dark:bg-zinc-900/60 p-2 rounded border border-zinc-200/50 dark:border-zinc-800">
-                    {edu.thesis}
-                  </p>
-                ) : null}
-              </div>
+                <span>Mulai percakapan</span>
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative flex flex-col justify-center gap-4 overflow-hidden bg-[#07061a] p-8 sm:p-12">
+            <div
+              aria-hidden="true"
+              className="absolute -right-24 -top-24 size-80 rounded-full bg-accent-1/40 blur-[90px]"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute -bottom-24 left-0 size-72 rounded-full bg-accent-2/30 blur-[90px]"
+            />
+            {contactFacts.map((fact) => (
+              <p
+                key={fact}
+                className="relative flex items-center gap-3 rounded-full border border-white/15 bg-black/40 px-5 py-3.5 font-mono text-xs text-white backdrop-blur sm:text-sm"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-4 shrink-0 text-accent-2"
+                  aria-hidden="true"
+                >
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+                {fact}
+              </p>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 3. CAVE-STYLE FOOTER */}
-      <footer className="border-t border-zinc-200/80 dark:border-zinc-800/80 pt-8 mt-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[11px] font-mono text-zinc-500">
-        <div>
-          <span>{profileData.name?.toLowerCase()} · {profileData.location?.toLowerCase()}</span>
+      {/* ============ FORM KONTAK ============ */}
+      <section id="kontak" className="container-x scroll-mt-28 py-20 sm:py-28">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+          <div>
+            <p className="eyebrow mb-4">Ayo ngobrol</p>
+            <h2 className="text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[1.08]">
+              Siap beralih dari perencanaan ke eksekusi?
+            </h2>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-foreground/65">
+              Ceritakan kebutuhan timmu — saya akan membalas dengan jujur soal
+              apa yang bisa saya kerjakan dan kapan bisa mulai.
+            </p>
+            <div className="mt-8 flex items-center gap-3 font-mono text-xs text-muted-foreground">
+              <span className="inline-block size-1.5 animate-pulse rounded-full bg-accent-4" />
+              Tersedia untuk peluang baru
+            </div>
+          </div>
+          <ContactForm />
         </div>
-        <div className="flex items-center gap-4">
-          {profileData.email && (
-            <Link
-              href={`mailto:${profileData.email}`}
-              className="hover:text-foreground transition-colors"
-            >
-              {profileData.email}
-            </Link>
-          )}
-          {profileData.phone && (
-            <Link
-              href={`https://wa.me/${profileData.phone.replace(/[^0-9]/g, "").replace(/^0/, "62")}`}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-foreground transition-colors"
-            >
-              {profileData.phone}
-            </Link>
-          )}
-        </div>
-      </footer>
-    </div>
+      </section>
+    </>
   );
 }

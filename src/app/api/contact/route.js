@@ -59,20 +59,7 @@ export async function POST(request) {
     const cleanName = sanitize(name);
     const cleanMessage = sanitize(message);
 
-    // Simpan ke Supabase inbox jika kredensial aktif
-    try {
-      const { getAdminClient } = await import("@/lib/supabase/admin");
-      const supabase = getAdminClient();
-      if (supabase) {
-        await supabase.from("inbox_messages").insert({
-          name: cleanName,
-          email,
-          message: cleanMessage,
-        });
-      }
-    } catch (dbErr) {
-      console.warn("Gagal simpan ke Supabase inbox:", dbErr);
-    }
+    console.log("Contact form submission:", { name: cleanName, email, message: cleanMessage });
 
     return NextResponse.json(
       { message: "Pesan berhasil dikirim" },
