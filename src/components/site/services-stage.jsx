@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Icon } from "@/components/icons";
 
 /**
  * Pinned horizontal card stage (easternboss "stage-services"):
@@ -125,40 +126,27 @@ function TiltCard({ item, index }) {
         style={{
           backgroundImage:
             "radial-gradient(60% 55% at 0% 70%, rgb(150 170 120 / .55), transparent 70%), radial-gradient(55% 55% at 45% 105%, rgb(190 120 200 / .6), transparent 70%), radial-gradient(45% 60% at 100% 95%, rgb(187 231 181 / .5), transparent 70%), radial-gradient(40% 50% at 100% 40%, rgb(91 123 251 / .45), transparent 70%)",
+          opacity: "var(--card-blob-opacity)",
         }}
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--card)_22%,rgb(0_0_0/0.45)_50%,transparent_78%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--card)_22%,var(--card-fade)_50%,transparent_78%)]"
       />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
-            "radial-gradient(320px circle at var(--mx) var(--my), rgb(255 255 255 / 0.12), transparent 60%)",
+            "radial-gradient(320px circle at var(--mx) var(--my), var(--card-hover-glow), transparent 60%)",
         }}
       />
 
       <span className="flex items-start justify-between">
-        <svg viewBox="0 0 60 60" className="size-12" aria-hidden="true">
-          <defs>
-            <linearGradient id={`g_${index}`} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#f2f2f2" />
-              <stop offset="1" stopColor="#7a7a7a" />
-            </linearGradient>
-          </defs>
-          <g fill={`url(#g_${index})`}>
-            <rect x="0" y="0" width="20" height="20" />
-            <path d="M40,20 L20,20 A20,20 0 0 1 40,0 Z" />
-            <path d="M0,20 L20,40 L0,40 Z" />
-            <rect x="20" y="20" width="20" height="20" />
-            <path d="M40,40 L60,40 A20,20 0 0 1 40,60 Z" />
-            <path d="M0,40 L20,40 L20,60 Z" />
-            <circle cx="30" cy="50" r="10" />
-            <rect x="40" y="40" width="20" height="20" />
-          </g>
-        </svg>
+        <Icon
+          name={item.icon}
+          className="size-12 text-foreground/70 transition-colors duration-500 group-hover:text-accent-4"
+        />
         <span className="font-mono text-xs text-muted-foreground">
           {String(index + 1).padStart(2, "0")}
         </span>

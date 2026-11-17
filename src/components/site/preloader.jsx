@@ -23,7 +23,7 @@ export default function Preloader() {
   return (
     <div
       aria-hidden="true"
-      className="preloader fixed inset-0 z-[100] flex items-end justify-between bg-black p-5 sm:p-10"
+      className="preloader pointer-events-none fixed inset-0 z-[100] flex items-end justify-between bg-black p-5 sm:p-10"
     >
       <p className="select-none font-display text-[18vw] font-semibold leading-[0.8] tracking-tighter text-white/[0.05]">
         dimah

@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
 import {
   profileData,
-  educationData,
   experienceData,
   projectDatas,
   skillsData,
@@ -18,7 +16,7 @@ import ContactForm from "@/components/site/contact-form";
 export const metadata = {
   title: "D. Luthfi Aulia Rohman — IT Support & Programmer",
   description:
-    "Portofolio teknis D. Luthfi Aulia Rohman — Lulusan S1 Informatika (IPK 3,73 / Cumlaude) berpengalaman di IT Rumah Sakit, troubleshooting hardware/jaringan, serta web development.",
+    "Portofolio teknis D. Luthfi Aulia Rohman — Lulusan S1 Informatika (IPK 3,69 / Cumlaude) berpengalaman di IT Rumah Sakit, troubleshooting hardware/jaringan, serta web development.",
 };
 
 const TECH_STACK = [
@@ -34,12 +32,13 @@ export default function HomePage() {
       value: String(experienceData.length).padStart(2, "0"),
       label: "pengalaman & proyek",
     },
-    { value: "3,73", label: "IPK · cumlaude" },
+    { value: "3,69", label: "IPK · cumlaude" },
     { value: "01", label: "juara nasional 2024" },
   ];
 
   const skillItems = skillsData.map((cat) => ({
     title: cat.category,
+    icon: cat.icon,
     description: cat.skills.slice(0, 4).join(" · "),
   }));
 
@@ -48,7 +47,7 @@ export default function HomePage() {
     heading: exp.institution,
     kicker: exp.type,
     description: exp.responsibilities?.[0] || exp.position,
-    panelText: exp.responsibilities?.join(" ") || "",
+    panelText: exp.responsibilities?.slice(0, 2).join(" ") || "",
     tags: exp.tools || [],
   }));
 
@@ -67,7 +66,7 @@ export default function HomePage() {
     }));
 
   const contactFacts = [
-    "IPK 3,73 / 4,00 — predikat Cumlaude",
+    "IPK 3,69 / 4,00 — predikat Cumlaude",
     "Magang IT di RS PKU Aisyiyah Boyolali",
     "Juara 1 Kompetisi Nasional CORISINDO 2024",
   ];
@@ -101,7 +100,7 @@ export default function HomePage() {
 
             {/* Centered entrance */}
             <div className="animate-rise container-x relative flex flex-1 flex-col items-center justify-center py-14 text-center lg:absolute lg:inset-0 lg:py-0">
-              <p className="eyebrow mb-6 rounded-full border border-line bg-black/45 px-4 py-1.5 !text-white/90 backdrop-blur-md">
+              <p className="eyebrow mb-6 rounded-full border border-line bg-black/65 px-4 py-1.5 !text-white/90 backdrop-blur-md dark:bg-black/45">
                 IT Support · Programmer
               </p>
               <h1 className="text-display text-legible max-w-5xl text-foreground">
@@ -113,7 +112,7 @@ export default function HomePage() {
             <div className="container-x relative grid items-end gap-8 pb-10 lg:absolute lg:inset-x-0 lg:bottom-0 lg:grid-cols-[1fr_auto]">
               <div className="max-w-sm">
                 <p className="text-legible text-sm leading-relaxed text-foreground/85">
-                  Lulusan S1 Informatika (IPK 3,73 Cumlaude) dengan pengalaman
+                  Lulusan S1 Informatika (IPK 3,69 Cumlaude) dengan pengalaman
                   magang IT di rumah sakit — troubleshooting hardware &amp;
                   jaringan, plus pengembangan web dengan Next.js.
                 </p>
@@ -251,11 +250,12 @@ export default function HomePage() {
                 style={{
                   backgroundImage:
                     "radial-gradient(60% 55% at 0% 70%, rgb(150 170 120 / .4), transparent 70%), radial-gradient(55% 55% at 45% 105%, rgb(190 120 200 / .45), transparent 70%), radial-gradient(45% 60% at 100% 95%, rgb(187 231 181 / .4), transparent 70%), radial-gradient(40% 50% at 100% 40%, rgb(91 123 251 / .4), transparent 70%)",
+                  opacity: "var(--card-blob-opacity)",
                 }}
               />
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--card)_22%,rgb(0_0_0/0.45)_50%,transparent_78%)]"
+                className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--card)_22%,var(--card-fade)_50%,transparent_78%)]"
               />
 
               <div className="flex items-start justify-between gap-4">

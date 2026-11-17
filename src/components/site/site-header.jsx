@@ -60,8 +60,7 @@ export default function SiteHeader({ cvUrl }) {
             <ThemeSwitcher />
             <Link
               href={cvUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              download="CV-D-Luthfi-Aulia-Rohman.pdf"
               className="ml-1.5 rounded-full px-3.5 py-2 text-sm text-foreground/80 transition-colors hover:text-foreground"
             >
               CV
@@ -81,8 +80,15 @@ export default function SiteHeader({ cvUrl }) {
           </nav>
 
           {/* Compact mobile actions */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
             <ThemeSwitcher />
+            <Link
+              href={cvUrl}
+              download="CV-D-Luthfi-Aulia-Rohman.pdf"
+              className="rounded-full border border-line px-3 py-2 text-[12px] font-medium text-foreground/80 transition-colors hover:border-foreground/40 hover:text-foreground"
+            >
+              CV
+            </Link>
             <Link
               href="/contact"
               className="rounded-full bg-brand px-3.5 py-2 text-[12px] font-semibold text-white"

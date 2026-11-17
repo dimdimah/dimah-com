@@ -3,15 +3,15 @@ export const profileData = {
   position: "IT Support | Programmer",
   degree: "S1 Informatika (S.Kom.)",
   institution: "STMIK Amikom Surakarta",
-  ipk: "3,73 / 4,00 (Cumlaude)",
+  ipk: "3,69 / 4,00 (Cumlaude)",
   location: "Jatinom, Klaten, Indonesia",
   phone: "+62 851-6281-3769",
   email: "dimaharohman@gmail.com",
   linkedin: "https://www.linkedin.com/in/dimah-luthfi",
-  cv_url: "/admin.pdf",
-  description: `Lulusan S1 Informatika (IPK 3,73 / Cumlaude) dengan pengalaman kerja magang di bidang IT Rumah Sakit (RS PKU Aisyiyah Boyolali). Berpengalaman menangani deployment, instalasi, konfigurasi, serta troubleshooting hardware PC, printer thermal & inkjet, dan penanganan jaringan dasar (konfigurasi IP & konektivitas). Terbiasa menulis kode pada proyek berbasis web (JavaScript, HTML, CSS, Next.js, Express.js), merancang antarmuka di Figma, serta memimpin tim pengembangan produk digital dari perencanaan hingga implementasi. Siap berkontribusi sebagai IT Support maupun Programmer (Entry-Level).`,
+  cv_url: "/it-supp.pdf",
+  description: `Lulusan S1 Informatika (IPK 3,69 / Cumlaude) dengan pengalaman kerja magang di bidang IT Rumah Sakit (RS PKU Aisyiyah Boyolali). Berpengalaman menangani deployment, instalasi, konfigurasi, serta troubleshooting hardware PC, printer thermal & inkjet, dan penanganan jaringan dasar (konfigurasi IP & konektivitas). Terbiasa menulis kode pada proyek berbasis web (JavaScript, HTML, CSS, Next.js, Express.js), merancang antarmuka di Figma, serta memimpin tim pengembangan produk digital dari perencanaan hingga implementasi. Siap berkontribusi sebagai IT Support maupun Programmer (Entry-Level).`,
   links: [
-    { text: "CV", url: "/admin.pdf" },
+    { text: "CV", url: "/it-supp.pdf" },
     { text: "LinkedIn", url: "https://www.linkedin.com/in/dimah-luthfi" },
     { text: "Email", url: "mailto:dimaharohman@gmail.com" },
     { text: "WhatsApp", url: "https://wa.me/6285162813769" },
@@ -22,7 +22,7 @@ export const educationData = [
   {
     institution: "STMIK Amikom Surakarta",
     duration: "Agustus 2021 – September 2025",
-    description: "S1 Informatika | IPK 3,73/4,00 (Predikat Cumlaude)",
+    description: "S1 Informatika | IPK 3,69/4,00 (Predikat Cumlaude)",
     focus: "Fokus studi: Administrasi sistem, manajemen proyek, analisis kebutuhan produk, dan pengelolaan data.",
     thesis: "Skripsi: Perancangan Sistem Pelayanan Surat Keterangan Desa Berbasis Website Menggunakan Framework Next.JS (Studi Kasus: Desa Singopuran).",
     url: "/",
@@ -124,6 +124,7 @@ export const experienceData = [
 export const skillsData = [
   {
     category: "Hardware & IT Support",
+    icon: "hardware",
     skills: [
       "PC Hardware Deployment & Assembly",
       "Hardware Diagnostics & Repair",
@@ -135,6 +136,7 @@ export const skillsData = [
   },
   {
     category: "Networking & Infrastructure",
+    icon: "network",
     skills: [
       "TCP/IP & Local Area Network (LAN)",
       "IP Address Configuration",
@@ -145,6 +147,7 @@ export const skillsData = [
   },
   {
     category: "Web & Programming",
+    icon: "web",
     skills: [
       "JavaScript (ES6+)",
       "HTML5 & CSS3",
@@ -157,6 +160,7 @@ export const skillsData = [
   },
   {
     category: "Product & Systems Analysis",
+    icon: "analysis",
     skills: [
       "Figma (UI/UX Interface Design)",
       "Requirement Gathering & Interviews",

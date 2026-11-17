@@ -5,7 +5,12 @@ const RATE_LIMIT_WINDOW = 60000;
 const RATE_LIMIT_MAX = 5;
 
 function sanitize(str) {
+  if (typeof str !== "string") return "";
   return str.replace(/<[^>]*>/g, "").slice(0, 1000);
+}
+
+function isString(value) {
+  return typeof value === "string";
 }
 
 export async function POST(request) {
@@ -34,7 +39,7 @@ export async function POST(request) {
     const body = await request.json();
     const { name, email, message } = body;
 
-    if (!name || !email || !message) {
+    if (!isString(name) || !isString(email) || !isString(message)) {
       return NextResponse.json(
         { error: "Semua field harus diisi" },
         { status: 400 }
@@ -56,14 +61,15 @@ export async function POST(request) {
       );
     }
 
-    const cleanName = sanitize(name);
+const cleanName = sanitize(name);
     const cleanMessage = sanitize(message);
 
-    console.log("Contact form submission:", { name: cleanName, email, message: cleanMessage });
-
+    // TODO: Integrate with email service (e.g. Formspree, Nodemailer, or
+    // Supabase) to actually deliver the message. Until then, respond with
+    // 501 so the client knows the message was NOT sent.
     return NextResponse.json(
-      { message: "Pesan berhasil dikirim" },
-      { status: 200 }
+      { error: "Layanan pengiriman pesan belum tersedia" },
+      { status: 501 }
     );
   } catch (error) {
     console.error("Error contact form:", error);

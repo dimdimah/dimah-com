@@ -9,6 +9,22 @@ import { useEffect, useRef } from "react";
  */
 export default function ParticleSphere() {
   const ref = useRef(null);
+  // Warna & opacity partikel mengikuti tema — putih di dark, gelap di light.
+  const paletteRef = useRef({ fill: "#ffffff", alpha: 1 });
+
+  // Pantau class "dark" di <html> (di-toggle next-themes) tanpa restart loop.
+  useEffect(() => {
+    const root = document.documentElement;
+    const read = () => {
+      paletteRef.current = root.classList.contains("dark")
+        ? { fill: "#ffffff", alpha: 1 }
+        : { fill: "#2a2a45", alpha: 0.28 };
+    };
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => mo.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = ref.current;
@@ -68,12 +84,13 @@ export default function ParticleSphere() {
     const draw = () => {
       t += reduce ? 0 : 0.0032;
       ctx.clearRect(0, 0, w, h);
+      const pal = paletteRef.current;
 
       // Starfield
       for (const s of stars) {
         s.a += s.s;
-        ctx.globalAlpha = 0.18 + Math.abs(Math.sin(s.a)) * 0.6;
-        ctx.fillStyle = "#ffffff";
+        ctx.globalAlpha = (0.18 + Math.abs(Math.sin(s.a)) * 0.6) * pal.alpha;
+        ctx.fillStyle = pal.fill;
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         ctx.fill();
@@ -89,8 +106,8 @@ export default function ParticleSphere() {
         const y3 = Math.cos(p.phi);
         const z3 = Math.sin(p.phi) * Math.sin(th);
         const depth = (z3 + 1) / 2;
-        ctx.globalAlpha = 0.12 + depth * 0.85;
-        ctx.fillStyle = "#ffffff";
+        ctx.globalAlpha = (0.12 + depth * 0.85) * pal.alpha;
+        ctx.fillStyle = pal.fill;
         ctx.beginPath();
         ctx.arc(cx + x3 * R, cy + y3 * R, 0.5 + depth * 1.7, 0, Math.PI * 2);
         ctx.fill();

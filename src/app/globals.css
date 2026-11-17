@@ -71,6 +71,18 @@
   --background: #fafafa;
   --foreground: #111111;
   --line: rgb(0 0 0 / 12%);
+
+  /* Theme-aware surface treatments.
+     Nilai dark-mode (gelap/putih) disimpan di blok .dark — di light mode
+     vignette memakai putih (fade) supaya kartu putih tidak ada abu-abu smear. */
+  --card-fade: rgb(255 255 255 / 0.85);
+  --card-hover-glow: rgb(0 0 0 / 0.07);
+  --card-blob-opacity: 0.55;
+  --legible-shadow: none;
+  /* Warna ujung gradient untuk surface (tombol). Terpisah dari --accent-4
+     karena accent-4 dipakai sebagai warna TEKS, yang di dark mode bernilai
+     mint pucat (#bbe7b5) — putih di atasnya hanya kontras 1.4:1. */
+  --brand-3: #1f7a4d;
   --accent-1: #5b45d6;
   --accent-2: #3f55c9;
   --accent-4: #1f7a4d;
@@ -109,6 +121,13 @@
   --background: #000000;
   --foreground: #ffffff;
   --line: rgb(255 255 255 / 14%);
+  --card-fade: rgb(0 0 0 / 0.45);
+  --card-hover-glow: rgb(255 255 255 / 0.12);
+  --card-blob-opacity: 1;
+  --brand-3: #2e7d52;
+  --legible-shadow:
+    0 0 2px rgb(0 0 0 / 70%),
+    0 1px 14px rgb(0 0 0 / 85%);
   --accent-1: #7662f4;
   --accent-2: #5b7bfb;
   --accent-4: #bbe7b5;
@@ -161,9 +180,7 @@
 
 /* Legible glow for headings over dark hero (easternboss .text-legible) */
 @utility text-legible {
-  text-shadow:
-    0 0 2px rgb(0 0 0 / 70%),
-    0 1px 14px rgb(0 0 0 / 85%);
+  text-shadow: var(--legible-shadow);
 }
 
 /* Wide shell (1400px) — content column stays 800px */
@@ -184,13 +201,13 @@
   font-weight: 500;
 }
 
-/* Brand gradient (accent-1 → accent-2 → accent-4) */
+/* Brand gradient (accent-1 → accent-2 → brand-3) */
 @utility bg-brand {
   background-image: linear-gradient(
     110deg,
     var(--accent-1),
     var(--accent-2) 58%,
-    var(--accent-4)
+    var(--brand-3)
   );
 }
 

@@ -64,7 +64,7 @@ src/
 ## Key Profile & Credentials (Verified from PDF)
 - **Nama:** D. Luthfi Aulia Rohman
 - **Gelar:** Sarjana Komputer (S.Kom.), S1 Informatika STMIK Amikom Surakarta
-- **IPK:** 3,73 / 4,00 (Predikat Cumlaude)
+- **IPK:** 3,69 / 4,00 (Predikat Cumlaude)
 - **Domisili:** Jatinom, Klaten, Jawa Tengah
 - **Kontak:** dimaharohman@gmail.com | +62 851-6281-3769
 - **Pengalaman Utama:**

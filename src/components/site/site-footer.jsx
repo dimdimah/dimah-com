@@ -93,17 +93,12 @@ export default function SiteFooter() {
                 { href: "/", label: "Overview" },
                 { href: "/blog", label: "Blog" },
                 { href: "/contact", label: "Kontak" },
-                { href: "/admin.pdf", label: "CV (PDF)" },
+                { href: "/it-supp.pdf", label: "CV (PDF)", download: "CV-D-Luthfi-Aulia-Rohman.pdf" },
               ].map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    target={item.href === "/admin.pdf" ? "_blank" : undefined}
-                    rel={
-                      item.href === "/admin.pdf"
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
+                    download={item.download}
                     className="text-xs text-foreground/70 transition-colors hover:text-foreground"
                   >
                     {item.label}
